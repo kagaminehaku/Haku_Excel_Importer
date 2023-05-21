@@ -33,7 +33,7 @@ namespace Haku_Excel_Importer
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 filePath = openFileDialog.FileName;
-                Console.WriteLine("File selected: " + filePath);
+                MessageBox.Show("File selected: " + filePath);
             }
         }
 
@@ -41,7 +41,7 @@ namespace Haku_Excel_Importer
         {
             if (string.IsNullOrEmpty(filePath))
             {
-                Console.WriteLine("Please select an Excel file first.");
+                MessageBox.Show("Please select an Excel file first.");
                 return;
             }
 
@@ -56,41 +56,34 @@ namespace Haku_Excel_Importer
                 dataColumn1 = new List<string>();
                 dataColumn2 = new List<string>();
                 dataColumn3 = new List<string>();
-
                 for (int row = 2; row <= rowCount; row++) // Assuming data starts from the second row
                 {
                     string value1 = worksheet.Cells[row, 1].Value?.ToString(); // Assuming the name is in column 1
                     string value2 = worksheet.Cells[row, 2].Value?.ToString(); // Assuming the bday is in column 2
                     string value3 = worksheet.Cells[row, 3].Value?.ToString(); // Assuming the gender is in column 3
-
                     dataColumn1.Add(value1);
                     dataColumn2.Add(value2);
                     dataColumn3.Add(value3);
                 }
-
                 // Insert the data into the database
                 try
                 {
                     SqlConnection connection = new SqlConnection("Data Source=HATSUNEMIKUPOCK;Initial Catalog=sinhvien;Integrated Security=True");
                     connection.Open();
-
                     SqlCommand command = new SqlCommand("INSERT INTO [profile] (name, bday, gender) VALUES (@Value1, @Value2, @Value3)", connection);
-
                     for (int i = 0; i < dataColumn1.Count; i++)
                     {
                         command.Parameters.Clear();
                         command.Parameters.AddWithValue("@Value1", dataColumn1[i]);
                         command.Parameters.AddWithValue("@Value2", dataColumn2[i]);
                         command.Parameters.AddWithValue("@Value3", dataColumn3[i]);
-
                         command.ExecuteNonQuery();
                     }
-
-                    Console.WriteLine("Data inserted successfully.");
+                    MessageBox.Show("Data inserted successfully.");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("An error occurred: " + ex.Message);
+                    MessageBox.Show("An error occurred: " + ex.Message);
                 }
             }
         }
