@@ -14,9 +14,9 @@ using OfficeOpenXml;
 
 namespace Haku_Excel_Importer
 {
-    public partial class Form1 : Form
+    public partial class MainUI : Form
     {
-        public Form1()
+        public MainUI()
         {
             InitializeComponent();
         }
@@ -29,7 +29,6 @@ namespace Haku_Excel_Importer
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Title = "Select an Excel File";
             openFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx";
-
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 filePath = openFileDialog.FileName;
@@ -44,31 +43,27 @@ namespace Haku_Excel_Importer
                 MessageBox.Show("Please select an Excel file first.");
                 return;
             }
-
-            // Read the Excel file
             using (ExcelPackage package = new ExcelPackage(new System.IO.FileInfo(filePath)))
             {
-                //ExcelWorksheet worksheet = package.Workbook.Worksheets[1]; // Assuming you want to read the first worksheet
+                //ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
                 ExcelWorksheet worksheet = package.Workbook.Worksheets["Sheet1"];
-
-                // Get the data from the columns
                 int rowCount = worksheet.Dimension.Rows;
                 dataColumn1 = new List<string>();
                 dataColumn2 = new List<string>();
                 dataColumn3 = new List<string>();
-                for (int row = 2; row <= rowCount; row++) // Assuming data starts from the second row
+                for (int row = 2; row <= rowCount; row++) 
                 {
-                    string value1 = worksheet.Cells[row, 1].Value?.ToString(); // Assuming the name is in column 1
-                    string value2 = worksheet.Cells[row, 2].Value?.ToString(); // Assuming the bday is in column 2
-                    string value3 = worksheet.Cells[row, 3].Value?.ToString(); // Assuming the gender is in column 3
+                    string value1 = worksheet.Cells[row, 1].Value?.ToString(); 
+                    string value2 = worksheet.Cells[row, 2].Value?.ToString(); 
+                    string value3 = worksheet.Cells[row, 3].Value?.ToString(); 
                     dataColumn1.Add(value1);
                     dataColumn2.Add(value2);
                     dataColumn3.Add(value3);
+                    dgv1.Rows.Add(value1, value2, value3);
                 }
-                // Insert the data into the database
                 try
                 {
-                    SqlConnection connection = new SqlConnection("Data Source=HATSUNEMIKUPOCK;Initial Catalog=sinhvien;Integrated Security=True");
+                    SqlConnection connection = new SqlConnection("Data Source=.;Initial Catalog=sinhvien;Integrated Security=True");
                     connection.Open();
                     SqlCommand command = new SqlCommand("INSERT INTO [profile] (name, bday, gender) VALUES (@Value1, @Value2, @Value3)", connection);
                     for (int i = 0; i < dataColumn1.Count; i++)
@@ -78,7 +73,17 @@ namespace Haku_Excel_Importer
                         command.Parameters.AddWithValue("@Value2", dataColumn2[i]);
                         command.Parameters.AddWithValue("@Value3", dataColumn3[i]);
                         command.ExecuteNonQuery();
+                        //dgv2.Rows.Add(dataColumn1[i], dataColumn2[i], dataColumn3[i]);
                     }
+                    SqlCommand selectCommand = new SqlCommand("SELECT * FROM [profile]", connection);
+                    SqlDataReader reader = selectCommand.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        object[] rowValues = new object[reader.FieldCount];
+                        reader.GetValues(rowValues);
+                        dgv2.Rows.Add(rowValues);
+                    }
+                    connection.Close();
                     MessageBox.Show("Data inserted successfully.");
                 }
                 catch (Exception ex)
@@ -87,6 +92,5 @@ namespace Haku_Excel_Importer
                 }
             }
         }
-
     }
 }
