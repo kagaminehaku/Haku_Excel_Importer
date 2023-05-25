@@ -55,7 +55,7 @@
             this.selectfile.BackColor = System.Drawing.Color.Transparent;
             this.selectfile.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("selectfile.BackgroundImage")));
             this.selectfile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.selectfile.Location = new System.Drawing.Point(133, 69);
+            this.selectfile.Location = new System.Drawing.Point(12, 41);
             this.selectfile.Name = "selectfile";
             this.selectfile.Size = new System.Drawing.Size(128, 104);
             this.selectfile.TabIndex = 0;
@@ -67,7 +67,7 @@
             this.adddata.BackColor = System.Drawing.Color.Transparent;
             this.adddata.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("adddata.BackgroundImage")));
             this.adddata.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.adddata.Location = new System.Drawing.Point(133, 305);
+            this.adddata.Location = new System.Drawing.Point(12, 151);
             this.adddata.Name = "adddata";
             this.adddata.Size = new System.Drawing.Size(128, 104);
             this.adddata.TabIndex = 1;
@@ -80,7 +80,7 @@
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(800, 450);
+            this.pictureBox1.Size = new System.Drawing.Size(923, 421);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
@@ -92,9 +92,9 @@
             this.name,
             this.BDay,
             this.gender});
-            this.dgv1.Location = new System.Drawing.Point(276, 41);
+            this.dgv1.Location = new System.Drawing.Point(146, 41);
             this.dgv1.Name = "dgv1";
-            this.dgv1.Size = new System.Drawing.Size(344, 167);
+            this.dgv1.Size = new System.Drawing.Size(344, 104);
             this.dgv1.TabIndex = 3;
             // 
             // name
@@ -119,9 +119,9 @@
             this.name2,
             this.bday2,
             this.gender2});
-            this.dgv2.Location = new System.Drawing.Point(276, 271);
+            this.dgv2.Location = new System.Drawing.Point(146, 151);
             this.dgv2.Name = "dgv2";
-            this.dgv2.Size = new System.Drawing.Size(344, 167);
+            this.dgv2.Size = new System.Drawing.Size(344, 104);
             this.dgv2.TabIndex = 4;
             // 
             // name2
@@ -143,7 +143,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(923, 421);
             this.Controls.Add(this.dgv2);
             this.Controls.Add(this.dgv1);
             this.Controls.Add(this.adddata);
